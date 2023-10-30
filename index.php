@@ -1,15 +1,23 @@
 <?php 
 declare(strict_types = 1);
-include("classes.php");
+?>
 
-$guestbook = new Guestbook();
-$guestbookdisplayer = new GuestbookDisplayer($guestbook);
-$messageArray = array();
-array_push($messageArray, new Message("hello world!", "greeting", 1));
-array_push($messageArray, new Message("goodbye world!", "goodbye", 2));
-$guestbook->addMessages($messageArray);
+<div>
+    <form method="POST">
+        <h1>Laat je naam en een stukje tekst achter</h1>
+        <label for="name">Naam</label>
+        <input type="text" name="name">
+        <label for="text">Tekst</label>
+        <input type="text" name="text">
+        <input type="submit" name="submit">
+</div>
 
-$guestbookdisplayer->displayMessages();
+<?php
+    include("classes.php");
+    include("logic.php");
 
+    if (!empty($_POST['submit'])){
+        onSubmitPress();
+    }
 ?>
 

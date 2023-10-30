@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 class Guestbook{
 
@@ -11,10 +12,15 @@ class Guestbook{
     public function getMessages():array{
         return $this->messages;
     }
+    
+    public function addMessage(Message $message){
+        array_push($this->messages, $message);
+    }
 
+    //"Override" voor meerdere messages - bijvoorbeeld als ze uit de textfile komen
     public function addMessages(array $messages){
         foreach($messages as $message){
-            array_push($messages, $this->messages);
+            array_push($this->messages, $message);
         }
     }
 
@@ -32,6 +38,11 @@ class Guestbook{
     }
 }
 
+
+/*interface IMessage { 
+    public function getID(): string {}
+}*/
+
 class Message{
 
     protected string $name;
@@ -44,6 +55,10 @@ class Message{
         $this->text = $text;
         $this->id = $id;
 
+    }
+
+    function __toString(){
+        return $this->text;
     }
 
     public function getName():string{
@@ -91,10 +106,37 @@ class GuestbookDisplayer{
     }
 
     public function displayMessages(){
-        echo "TEST";
-        echo implode(",", $this->guestbook->getMessages());
         foreach($this->guestbook->getMessages() as $message){
             echo $this->convertToHTML($message);
         }
+    }
+}
+
+class GuestbookSubmitter{
+
+    public function __construct(){
+
+    }
+    
+    private function validateText(string $text){
+        return $text;
+    }
+
+    private function validateName(string $name){
+        return $name;
+    }
+    
+    private function convertInputToMessage(string $name, string $text): Message{
+        try{
+            return new Message($name, $text, 1);
+        }
+        catch (Exception $exception){
+            return null;
+        }
+    }
+
+    public function getMessageFromPage(): Message{
+        $name = $this->validateName($_POST['name']); $text = $this->validateText($_POST['text']);
+        return $this->convertInputToMessage($name, $text);
     }
 }
