@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 class Guestbook{
 
-    protected array $messages = array();
+    private array $messages = array();
 
     function __construct(){
 
@@ -17,7 +17,7 @@ class Guestbook{
         array_push($this->messages, $message);
     }
 
-    //"Override" voor meerdere messages - bijvoorbeeld als ze uit de textfile komen
+    //"Override" for multiple messages - useful when adding messages from text file to the guestbook all at once
     public function addMessages(array $messages){
         foreach($messages as $message){
             array_push($this->messages, $message);
@@ -38,14 +38,9 @@ class Guestbook{
     }
 }
 
-
-/*interface IMessage { 
-    public function getID(): string {}
-}*/
-
 class Message{
 
-    protected string $name;
+    protected string $name; //Protected for possible inheritance
     protected string $text;
     protected int $id;
 
@@ -58,7 +53,7 @@ class Message{
     }
 
     function __toString(){
-        return $this->text;
+        return ($this->text . " - " . $this->name);
     }
 
     public function getName():string{
@@ -77,13 +72,13 @@ class Message{
 
 class GuestbookDisplayer{
 
-    protected Guestbook $guestbook;
+    private Guestbook $guestbook;
 
     public function __construct(Guestbook $guestbook){
         $this->guestbook = $guestbook;
     }
 
-    protected function convertToHTML(Message $message):string{
+    private function convertToHTML(Message $message):string{
         $htmlcode = 
         "
         <div>
