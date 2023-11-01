@@ -85,10 +85,10 @@ class GuestbookDisplayer{
         $this->guestbook = $guestbook;
     }
 
-    private function convertToHTML(Message $message): string{
+    private function convertMessageToHTML(Message $message): string{
         $htmlcode = 
         "
-        <div>
+        <div class='message'>
             <h3>
         "
         .
@@ -103,7 +103,7 @@ class GuestbookDisplayer{
         "   </p>
         "
         . 
-        "   <button name='delete
+        "   <button class='btn' name='delete
         "
         .
         $message->getID()
@@ -117,7 +117,7 @@ class GuestbookDisplayer{
 
     public function displayMessages(){
         foreach($this->guestbook->getMessages() as $message){
-            echo $this->convertToHTML($message);
+            echo $this->convertMessageToHTML($message);
         }
     }
 }

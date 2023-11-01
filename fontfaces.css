@@ -1,0 +1,14 @@
+@font-face {
+    font-family: "Merriweather Black";
+    src: url(fonts/merriweather-black-webfont.woff);
+}
+
+@font-face {
+    font-family: "Merriweather Italic";
+    src: url(fonts/merriweather-blackitalic-webfont.woff);
+}
+
+@font-face {
+    font-family: "Merriweather Light";
+    src: url(fonts/merriweather-light-webfont.woff);
+}

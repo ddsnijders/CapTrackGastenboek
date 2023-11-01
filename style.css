@@ -1,0 +1,126 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Merriweather Light";
+}
+
+p{
+    font-family: "Merriweather Light";
+    font-size: 16px;
+}
+
+h1{
+    font-family: "Merriweather Black";
+    font-size: 36px;
+}
+
+h2{
+    font-family: "Merriweather Italic";
+    font-size: 36px;
+}
+
+.primary-theme h2{
+    color: whitesmoke;
+}
+
+h3{
+    font-family: "Merriweather Black";
+    font-size: 24px;
+}
+
+.btn{
+    background-color: #1a2289;
+    border: none;
+    height: 30px;
+    padding: 5px;
+    color: whitesmoke;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+html{
+    box-sizing: border-box;
+    background-color: #cccccc;
+}
+
+.span-page{
+    width: 100vw;
+}
+
+.primary-theme{
+    background-color: #00A881;
+}
+
+.flex-col{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 400px;
+}
+
+.flex-col label, .flex-col input, .flex-col textarea{
+    margin: 5px;
+}
+
+.message{
+    background-color: whitesmoke;
+    height: 200px;
+    width: 80%;
+    margin: 20px;
+    padding: 20px;
+}
+
+.message h3{
+    height: 30px;
+}
+
+.message p{
+    height: 135px;
+}
+
+#header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+#elements-container{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100vw;
+    position: relative;
+    top: 50px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+#message-container{
+    width: 35%;
+}
+
+#submission-container{
+    width: 35%;
+    padding-top: 20px;
+}
+
+#text-input{
+    height: 200px;
+    
+}
+
+#footer{
+    height: 50px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+}
+
+
+

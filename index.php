@@ -2,22 +2,41 @@
 declare(strict_types = 1);
 ?>
 
-<div>
-    <form method="POST">
-        <h1>Laat je naam en een stukje tekst achter</h1>
-        <label for="name">Naam</label>
-        <input type="text" name="name">
-        <label for="text">Tekst</label>
-        <input type="text" name="text">
-        <input type="submit" name="submit">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="fontfaces.css">
+
+<div class="span-page primary-theme" id="header">
+    <h2>Gastenboek</h2>
 </div>
 
-<?php
-    include("classes.php");
-    include("logic.php");
+<div id="elements-container">
 
-    if (!empty($_POST['submit'])){
-        onSubmitPress();
-    }
-?>
+    <div id="submission-container">
+        <form method="POST">
+            <h1>Laat een berichtje achter!</h1>
+            <div class="flex-col">
+                <label for="name">Naam</label>
+                <input type="text" name="name" id="name-input">
+                <label for="text">Tekst</label>
+                <textarea name="text" id="text-input"></textarea>
+                <input type="submit" class="btn" name="submit">
+            </div>
+        </form> 
+    </div>
+
+    <div id="message-container">
+    <?php
+        include("classes.php");
+        include("logic.php");
+
+        if (!empty($_POST['submit'])){
+            onSubmitPress();
+        }
+    ?>
+    </div>
+
+</div>
+
+<div class="span-page primary-theme" id="footer">
+</div>
 
