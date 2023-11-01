@@ -45,7 +45,7 @@ class Guestbook{
     }
 }
 
-class Message{
+class Message implements JsonSerializable{
 
     protected string $name; //Protected for possible inheritance
     protected string $text;
@@ -60,7 +60,7 @@ class Message{
     }
 
     function __toString(){
-        return ($this->text . " - " . $this->name);
+        return ($this->name . " - " . $this->text);
     }
 
     public function getName(): string{
@@ -73,6 +73,10 @@ class Message{
 
     public function getID(): int{
         return $this->id;
+    }
+
+    public function jsonSerialize(){
+        return get_object_vars($this);
     }
 
 }
@@ -107,10 +111,14 @@ class GuestbookSubmitter{
     }
     
     private function validateText(string $text): string{
+        $text = trim($text);
+        $text = htmlspecialchars($text);
         return $text;
     }
 
     private function validateName(string $name){
+        $name = trim($name);
+        $name = htmlspecialchars($name);
         return $name;
     }
     
