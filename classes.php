@@ -4,6 +4,7 @@ declare(strict_types = 1);
 class Guestbook{
 
     private array $messages = array();
+    //private UserPostMessage $upm = null;
 
     function __construct(){
 
@@ -17,8 +18,13 @@ class Guestbook{
         array_push($this->messages, $message);
     }
 
-    //"Override" for multiple messages - useful when adding messages from text file to the guestbook all at once
+    //"Override" for multiple messages - useful when adding messages from text file to the guestbook all at once. 
+    // Can be removed in favour of addMessage in a loop instead.
     public function addMessages(array $messages){
+
+        //$upm->functionToAddMessage() //Add message to file
+
+        //To do: interface with file manager
         foreach($messages as $message){
             array_push($this->messages, $message);
         }
@@ -35,6 +41,7 @@ class Guestbook{
     public function deleteMessage(int $messageID){
         $deletedmessageindex = $this->findMessage($messageID);
         unset($this->messages[$deletedmessageindex]);
+        //$upm->functionToDeleteMessage //Delete message from
     }
 }
 
@@ -56,15 +63,15 @@ class Message{
         return ($this->text . " - " . $this->name);
     }
 
-    public function getName():string{
+    public function getName(): string{
         return $this->name;
     }
 
-    public function getText():string{
+    public function getText(): string{
         return $this->text;
     }
 
-    public function getID():int{
+    public function getID(): int{
         return $this->id;
     }
 
@@ -78,7 +85,7 @@ class GuestbookDisplayer{
         $this->guestbook = $guestbook;
     }
 
-    private function convertToHTML(Message $message):string{
+    private function convertToHTML(Message $message): string{
         $htmlcode = 
         "
         <div>
@@ -94,6 +101,14 @@ class GuestbookDisplayer{
         $message->getText()
         . 
         "   </p>
+        "
+        . 
+        "   <button name='delete
+        "
+        .
+        $message->getID()
+        . 
+        "   '>Verwijder</button>
         </div>
         "
         ;
@@ -113,7 +128,7 @@ class GuestbookSubmitter{
 
     }
     
-    private function validateText(string $text){
+    private function validateText(string $text): string{
         return $text;
     }
 
