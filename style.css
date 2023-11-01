@@ -38,10 +38,14 @@ h3{
     margin-bottom: 10px;
 }
 
+.btn:hover{
+    cursor: pointer;
+}
+
 
 html{
     box-sizing: border-box;
-    background-color: #cccccc;
+    background-color: #e0e0e0;
 }
 
 .span-page{

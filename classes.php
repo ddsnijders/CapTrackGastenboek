@@ -86,33 +86,11 @@ class GuestbookDisplayer{
     }
 
     private function convertMessageToHTML(Message $message): string{
-        $htmlcode = 
-        "
-        <div class='message'>
-            <h3>
-        "
-        .
-        $message->getName()
-        . 
-        "   </h3>
-            <p>
-        "
-        .
-        $message->getText()
-        . 
-        "   </p>
-        "
-        . 
-        "   <button class='btn' name='delete
-        "
-        .
-        $message->getID()
-        . 
-        "   '>Verwijder</button>
-        </div>
-        "
-        ;
-        return $htmlcode;
+        $placeholders = array("{{name}}", "{{text}}", "{{id}}");
+        $replacements = array($message->getName(), $message->getText(), $message->getID());
+        $html = file_get_contents("messagetemplate.html");
+
+        return str_replace($placeholders, $replacements, $html);
     }
 
     public function displayMessages(){
@@ -150,3 +128,5 @@ class GuestbookSubmitter{
         return $this->convertInputToMessage($name, $text);
     }
 }
+
+//$currentMessage = (new UserPostMessage())->userMessageCheck();
