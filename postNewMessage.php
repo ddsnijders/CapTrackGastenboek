@@ -1,42 +1,62 @@
 <?php declare(strict_types = 1);  ?>
 <?php 
-
-        //classes are named starting with a Capital letter
+    //classes are named starting with a Capital letter
     //ready for commit
-    
         class UserPostMessage{
             //properties
-
-            // public $current = "";
-            public $file = "";
-            
+            public $name;
+            public $message;
+            public $userMessage;
+            public $retrieveName;
+            public $retrieveMessage;  
             //methods
+            public function __construct($retrieveName, $retrieveMessage){
+                
+                $this->name = $retrieveName;
+                $this->message = $retrieveMessage;
+            }
 
-            function createUserFile(){ 
-                if (file_exists('files/users.txt')) {
+            public function createGuestBookFile(){ 
+                if (file_exists('files/users.json')) {
                     (new UserPostMessage)->userMessageCheck();
-                }else fopen('files/users.txt', 'w');
+                }else fopen('files/users.json', 'w');
             }
 
-            function userMessageCheck(){
+            public function placeholder(){
                 $replace = array('{name}', '{message}');
-                $values = array('', '');
-                if (isset($_POST['submitNewMessage'])){$this->postMessage($currentMessage = $_POST['message'], $currentName = $_POST['name']); }
+                $values = array($name, $message);
                 $template = file_get_contents(filename: 'index.php');
-                str_replace($replace, $values, $template);
-                $userMessage = json_encode($values); 
-                return $userMessage;  
             }
 
-            function postMessage($currentMessage, $currentName){ 
-                $file = 'files/users.txt';
-                $currentFile = file_get_contents('files/users.txt', use_include_path: true);
-                $currentFile .= $currentMessage;
-                $currentFile .= $currentName;
-                file_put_contents($file, $currentFile);
-                file_put_contents($file, $currentFile); 
-                return $this->file;
-            }    
+
+            public function userMessageCheck(){
+                $userMessage = $_POST;
+                $name = $userMessage['name'];
+                $message = $userMessage['message'];
+                $newMessage = str_replace($replace, $values, $template);
+                if (isset($_POST['submitNewMessage'])) { $this->saveMessageToFile($name, $message);}    
+            }
+            
+            public function saveMessageToFile($name, $message){ 
+                $file = 'files/users.json';
+                $currentFile =[
+                    "name" => $name,
+                    "message" => $message
+                ];
+                $addMessage = json_encode($currentFile);
+                $file = file_get_contents(filename: 'files/users.json', use_include_path: true);
+                json_decode($file);
+                $file = file_put_contents('files/users.json', $addMessage, FILE_APPEND);        
+            } 
+            
+            public function getMessageFromFile(){
+                $file = 'files/users.json';
+                $file = file_get_contents(filename: 'files/users.json', use_include_path: true);
+                $decodeJson =json_decode($file);
+                echo $retrieveMessageName->name;
+                echo $retrieveMessage->name;
+            }
+            
        }
-        echo (new UserPostMessage)->createUserFile();
+        echo $post1 = new UserPostMessage($retrieveName, $retrieveMessage);
         ?>

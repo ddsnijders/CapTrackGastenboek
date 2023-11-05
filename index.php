@@ -11,11 +11,11 @@
     
     <main>
         <form action="postNewMessage.php" method="post" >
-            <label for="" >Tell us your name here &nbsp;&nbsp;&nbsp;&nbsp;</label> 
+            <label for="name" >Tell us your name here &nbsp;&nbsp;&nbsp;&nbsp;</label> 
             <input name="name" placeholder="name" required value="{name}" type="text">
             <br>
-            <label for="" >Leave your message here&nbsp;</label>
-            <input name="message" placeholder="Enter your messsage here please" required value="{message}" type="text"> 
+            <label for="message" >Leave your message here&nbsp;</label>
+            <input name="message" placeholder="message" required value="{message}" type ="text"></input> 
             <br>      
             <button type="submit" name="submitNewMessage" required>submit</button>
         </form>
