@@ -7,7 +7,6 @@
     <title>Document</title>
 </head>
 <body>
-<!-- <?php require './files/guestbook.php'?> -->
     
     <main>
         <form action="" method="post" >

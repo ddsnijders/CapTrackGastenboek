@@ -17,8 +17,12 @@
             // $openPost = (new UserMessage())->retrieveMessageFromFile();
         }
     }
+    
+    class UserFile {
 
-    class UserFile extends Backend{
+        public function __construct(){
+
+        }
 
         public function placeholder(){
             $replace = array('{name}', '{message}');
@@ -29,30 +33,36 @@
         
         public function createGuestBookJson(){ 
             if (file_exists('files/users.json')) {
-                (new UserPostMessage)->userMessageCheck();
+                (new UserMessage())->userMessageCheck();
             }
             else fopen('files/users.json', 'w');
         }
     }
 
-    class UserMessage extends UserFile{ 
+    class UserMessage{ 
         public $retrieveName;
-        public $retrieveMessage; 
+        public $retrieveMessage;
+        
+        public function __construct(){
+
+        }
 
         public function userMessageCheck(){
-        if(isset($_POST)){
-            // $userMessage = $_POST;
-            if($_POST["name"] == 'name' || "{name})") {
-                echo $nameErr = "Name is required";
-            }
-            if(!preg_match("/^[a-zA-Z-' ]*$/",$_POST['name'])) {
-                echo $nameErr = "Only letters and white space allowed";
-            }      
+            if(isset($_POST)){
+                // $userMessage = $_POST;
+                if(empty($_POST["name"])) {
+                    echo $nameErr = "Name is required";
+                }
+                if(!preg_match("/^[a-zA-Z-' ]*$/",$_POST['name'])) {
+                    echo $nameErr = "Only letters and white space allowed";
+                }      
             }
             $name = $this->inputValidation($_POST['name']);
             $message = $this->inputValidation($_POST['message']);
-            if(isset($_POST['submitNewMessage'])) {$this->saveMessageToFile($name, $message);}     
-       } 
+            if(isset($_POST['submitNewMessage'])) {
+                $this->saveMessageToFile($name, $message);
+            }
+        }     
 
         public function inputValidation($data){
             $data = stripslashes($data);
@@ -88,5 +98,5 @@
         
     }
 
-    echo (new UserMessage())->createGuestBookJson();
+    echo (new UserFile())->createGuestBookJson();
     ?>
