@@ -6,7 +6,7 @@ class Guestbook{
     private array $messages = array();
     //private UserPostMessage $upm = null;
 
-    function __construct(){
+    public function __construct(){
 
     }
 
@@ -83,10 +83,8 @@ class Message implements JsonSerializable{
 
 class GuestbookDisplayer{
 
-    private Guestbook $guestbook;
-
-    public function __construct(Guestbook $guestbook){
-        $this->guestbook = $guestbook;
+    public function __construct(){
+        
     }
 
     private function convertMessageToHTML(Message $message): string{
@@ -97,8 +95,8 @@ class GuestbookDisplayer{
         return str_replace($placeholders, $replacements, $html);
     }
 
-    public function displayMessages(){
-        foreach($this->guestbook->getMessages() as $message){
+    public function displayMessages(Guestbook $guestbook){
+        foreach($guestbook->getMessages() as $message){
             echo $this->convertMessageToHTML($message);
         }
     }
@@ -107,7 +105,6 @@ class GuestbookDisplayer{
 class GuestbookSubmitter{
 
     public function __construct(){
-
     }
     
     private function validateText(string $text): string{

@@ -1,5 +1,7 @@
 <?php 
 declare(strict_types = 1);
+include_once("logic.php");
+include_once("classes.php");
 ?>
 
 <link rel="stylesheet" href="style.css">
@@ -25,14 +27,13 @@ declare(strict_types = 1);
     </div>
 
     <div id="message-container">
-    <?php
-        include("classes.php");
-        include("logic.php");
-
-        if (!empty($_POST['submit'])){
-            onSubmitPress();
-        }
-    ?>
+        <?php
+            $pagemanager = new PageManager();
+            $pagemanager->displayMessages();
+            if (!empty($_POST['submit'])){
+                $pagemanager->onSubmitPress();
+            }
+        ?>
     </div>
 
 </div>
