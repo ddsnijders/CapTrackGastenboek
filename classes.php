@@ -3,20 +3,22 @@ declare(strict_types = 1);
 
 class Guestbook{
 
-    private array $messages = array();
+    private array $messages;
+    private IDGenerator $idgenerator;
     //private UserPostMessage $upm = null;
 
-    public function __construct(){
+    public function __construct(IDGenerator $idgenerator){
+        $this->idgenerator = $idgenerator;
         $this->messages = $this->getMessages();
     }
 
     public function getMessages():array{
         
         $messages = [
-            new Message("hello world!", "greeting", 1),
-            new Message("goodbye world!", "goodbye", 2),
-            new Message("Djowie", "Dit is een bericht om te kijken wat er gebeurt met langere berichten.", 3),
-            new Message("Brian", "Dit is een testbericht om te kijken wat er gebeurt met nog veel langere berichten. Berichten mogen niet overflowen.", 4)
+            new Message("hello world!", "greeting", $this->idgenerator->generateID()),
+            new Message("goodbye world!", "goodbye", $this->idgenerator->generateID()),
+            new Message("Djowie", "Dit is een bericht om te kijken wat er gebeurt met langere berichten.", $this->idgenerator->generateID()),
+            new Message("Brian", "Dit is een testbericht om te kijken wat er gebeurt met nog veel langere berichten. Berichten mogen niet overflowen.", $this->idgenerator->generateID())
         ];
 
         return $messages;
@@ -57,9 +59,9 @@ class Message implements JsonSerializable{
 
     protected string $name; //Protected for possible inheritance
     protected string $text;
-    protected int $id;
+    protected string $id;
 
-    function __construct(string $name, string $text, int $id){
+    function __construct(string $name, string $text, string $id){
 
         $this->name = $name;
         $this->text = $text;
@@ -79,7 +81,7 @@ class Message implements JsonSerializable{
         return $this->text;
     }
 
-    public function getID(): int{
+    public function getID(): string{
         return $this->id;
     }
 
@@ -112,7 +114,10 @@ class GuestbookDisplayer{
 
 class GuestbookSubmitter{
 
-    public function __construct(){
+    private IDGenerator $idgenerator;
+
+    public function __construct(IDGenerator $idgenerator){
+        $this->idgenerator = $idgenerator;
     }
     
     private function validateText(string $text): string{
@@ -129,7 +134,7 @@ class GuestbookSubmitter{
     
     private function convertInputToMessage(string $name, string $text): Message{
         try{
-            return new Message($name, $text, 1);
+            return new Message($name, $text, $this->idgenerator->generateID());
         }
         catch (Exception $exception){
             return null;
@@ -142,4 +147,14 @@ class GuestbookSubmitter{
     }
 }
 
+class IDGenerator{
+
+    public function __construct(){
+
+    }
+
+    public function generateID(){
+        return uniqid("", true);
+    }
+}
 //$currentMessage = (new UserPostMessage())->userMessageCheck();

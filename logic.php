@@ -4,15 +4,17 @@ include_once("classes.php");
 
 class PageManager{
 
+    private IDGenerator $idgenerator;
     private Guestbook $guestbook;
     private GuestbookDisplayer $guestbookdisplayer;
     private GuestbookSubmitter $guestbooksubmitter;
     private array $messages;
 
     public function __construct(){
-        $this->guestbook = new Guestbook();
+        $this->idgenerator = new IDGenerator();
+        $this->guestbook = new Guestbook($this->idgenerator);
         $this->guestbookdisplayer = new GuestbookDisplayer();
-        $this->guestbooksubmitter = new GuestbookSubmitter();
+        $this->guestbooksubmitter = new GuestbookSubmitter($this->idgenerator);
     }
 
     public function displayMessages(){
