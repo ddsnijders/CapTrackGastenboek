@@ -7,11 +7,19 @@ class Guestbook{
     //private UserPostMessage $upm = null;
 
     public function __construct(){
-
+        $this->messages = $this->getMessages();
     }
 
     public function getMessages():array{
-        return $this->messages;
+        
+        $messages = [
+            new Message("hello world!", "greeting", 1),
+            new Message("goodbye world!", "goodbye", 2),
+            new Message("Djowie", "Dit is een bericht om te kijken wat er gebeurt met langere berichten.", 3),
+            new Message("Brian", "Dit is een testbericht om te kijken wat er gebeurt met nog veel langere berichten. Berichten mogen niet overflowen.", 4)
+        ];
+
+        return $messages;
     }
     
     public function addMessage(Message $message){
@@ -84,7 +92,7 @@ class Message implements JsonSerializable{
 class GuestbookDisplayer{
 
     public function __construct(){
-        
+
     }
 
     private function convertMessageToHTML(Message $message): string{
