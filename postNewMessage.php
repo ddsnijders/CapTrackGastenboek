@@ -11,9 +11,9 @@
         public $name;
         public $message;
         public $userMessage;
-        public function __construct (){
-            $name = (new UserMessage($this->userMessageCheck()));
-            $savePost = (new UserMessage($this->saveMessageToFile($name, $message)));
+        public function __construct(){
+            $name = (new Message($this->messageCheck()));
+            $savePost = (new Message($this->saveMessageToFile($name, $message)));
             // $openPost = (new UserMessage())->retrieveMessageFromFile();
         }
     }
@@ -29,17 +29,24 @@
         
         public function createGuestBookJson(){ 
             if (file_exists('files/users.json')) {
-                (new UserPostMessage)->userMessageCheck();
+                (new Message)->messageCheck();
             }
             else fopen('files/users.json', 'w');
         }
+
+        public function __construct(){
+
+        }
     }
 
-    class UserMessage extends UserFile{ 
+    class Message extends UserFile{
+        public $name;
+        public $message;
+        public $userMessage;
         public $retrieveName;
         public $retrieveMessage; 
 
-        public function userMessageCheck(){
+        public function messageCheck(){
         if(isset($_POST)){
             // $userMessage = $_POST;
             if($_POST["name"] == 'name' || "{name})") {
@@ -53,7 +60,7 @@
             $message = $this->inputValidation($_POST['message']);
             if(isset($_POST['submitNewMessage'])) {$this->saveMessageToFile($name, $message);}     
        } 
-
+      
         public function inputValidation($data){
             $data = stripslashes($data);
             $data =trim($data);
@@ -88,5 +95,6 @@
         
     }
 
-    echo (new UserMessage())->createGuestBookJson();
+    echo (new Message())->createGuestBookJson();
+
     ?>
