@@ -4,21 +4,19 @@ declare(strict_types = 1);
 class Guestbook{
 
     private array $messages;
-    private IDGenerator $idgenerator;
     //private UserPostMessage $upm = null;
 
-    public function __construct(IDGenerator $idgenerator){
-        $this->idgenerator = $idgenerator;
+    public function __construct(){
         $this->messages = $this->getMessages();
     }
 
     public function getMessages():array{
         
         $messages = [
-            new Message("hello world!", "greeting", $this->idgenerator->generateID()),
-            new Message("goodbye world!", "goodbye", $this->idgenerator->generateID()),
-            new Message("Djowie", "Dit is een bericht om te kijken wat er gebeurt met langere berichten.", $this->idgenerator->generateID()),
-            new Message("Brian", "Dit is een testbericht om te kijken wat er gebeurt met nog veel langere berichten. Berichten mogen niet overflowen.", $this->idgenerator->generateID())
+            new Message("hello world!", "greeting", IDGenerator::generateID()),
+            new Message("goodbye world!", "goodbye", IDGenerator::generateID()),
+            new Message("Djowie", "Dit is een bericht om te kijken wat er gebeurt met langere berichten.", IDGenerator::generateID()),
+            new Message("Brian", "Dit is een testbericht om te kijken wat er gebeurt met nog veel langere berichten. Berichten mogen niet overflowen.", IDGenerator::generateID())
         ];
 
         return $messages;
@@ -114,10 +112,7 @@ class GuestbookDisplayer{
 
 class GuestbookSubmitter{
 
-    private IDGenerator $idgenerator;
-
-    public function __construct(IDGenerator $idgenerator){
-        $this->idgenerator = $idgenerator;
+    public function __construct(){
     }
     
     private function validateText(string $text): string{
@@ -134,7 +129,7 @@ class GuestbookSubmitter{
     
     private function convertInputToMessage(string $name, string $text): Message{
         try{
-            return new Message($name, $text, $this->idgenerator->generateID());
+            return new Message($name, $text, IDGenerator::generateID());
         }
         catch (Exception $exception){
             return null;
@@ -153,7 +148,7 @@ class IDGenerator{
 
     }
 
-    public function generateID(){
+    public static function generateID(){
         return uniqid("", true);
     }
 }
