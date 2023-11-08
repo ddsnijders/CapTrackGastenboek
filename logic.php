@@ -12,9 +12,9 @@ class PageManager{
 
     public function __construct(){
         $this->idgenerator = new IDGenerator();
-        $this->guestbook = new Guestbook($this->idgenerator);
+        $this->guestbook = new Guestbook();
         $this->guestbookdisplayer = new GuestbookDisplayer();
-        $this->guestbooksubmitter = new GuestbookSubmitter($this->idgenerator);
+        $this->guestbooksubmitter = new GuestbookSubmitter();
     }
 
     public function displayMessages(){

@@ -4,7 +4,6 @@ declare(strict_types = 1);
 class Guestbook{
 
     private array $messages;
-    //private UserPostMessage $upm = null;
 
     public function __construct(){
         $this->messages = $this->getMessages();
@@ -16,7 +15,9 @@ class Guestbook{
             new Message("hello world!", "greeting", IDGenerator::generateID()),
             new Message("goodbye world!", "goodbye", IDGenerator::generateID()),
             new Message("Djowie", "Dit is een bericht om te kijken wat er gebeurt met langere berichten.", IDGenerator::generateID()),
-            new Message("Brian", "Dit is een testbericht om te kijken wat er gebeurt met nog veel langere berichten. Berichten mogen niet overflowen.", IDGenerator::generateID())
+            new Message("Brian", "Dit is een testbericht om te kijken wat er gebeurt met nog veel langere berichten. Berichten mogen niet overflowen.", IDGenerator::generateID()),
+            Message::jsonToMessage((new Message("Test", "Test2", "0"))->jsonSerialize())
+
         ];
 
         return $messages;
@@ -83,9 +84,16 @@ class Message implements JsonSerializable{
         return $this->id;
     }
 
-    public function jsonSerialize(){
-        return get_object_vars($this);
+    public function jsonSerialize(): string{
+        return json_encode(get_object_vars($this));
     }
+
+    public static function jsonToMessage(string $json): Message{
+        $decodedjson = json_decode($json);
+        return (new Message($decodedjson->name, $decodedjson->text, $decodedjson->id));
+    }
+
+    //[0, 1, [0,1]];
 
 }
 
@@ -121,7 +129,7 @@ class GuestbookSubmitter{
         return $text;
     }
 
-    private function validateName(string $name){
+    private function validateName(string $name): string{
         $name = trim($name);
         $name = htmlspecialchars($name);
         return $name;
@@ -148,7 +156,7 @@ class IDGenerator{
 
     }
 
-    public static function generateID(){
+    public static function generateID(): string{
         return uniqid("", true);
     }
 }
