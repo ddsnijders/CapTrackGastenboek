@@ -83,15 +83,15 @@
             $name = $_POST['name'];
             $message = $_POST['message'];
             $messages=[
-                ['name'],
-                ['message']
+                $name,
+                $message
             ];
             $this->messageCheck($name);
             $file = 'files/users.json';
             json_decode($file, true);
             $currentFile=[
                 'name' => $name,
-                'message' => $message,
+                'message' => $message
             ];
             
             $Post = array_push($messages, $currentFile);
