@@ -1,30 +1,34 @@
 <?php
 declare(strict_types = 1);
+include_once("filemanager.php");
 
 class Guestbook{
 
     private array $messages;
+    private FileManager $fileManager;
 
     public function __construct(){
+        $this->fileManager = new FileManager();
         $this->messages = $this->getMessages();
+
     }
 
     public function getMessages():array{
         
-        $messages = [
-            new Message("hello world!", "greeting", IDGenerator::generateID()),
-            new Message("goodbye world!", "goodbye", IDGenerator::generateID()),
+        /*$messages = [
             new Message("Djowie", "Dit is een bericht om te kijken wat er gebeurt met langere berichten.", IDGenerator::generateID()),
             new Message("Brian", "Dit is een testbericht om te kijken wat er gebeurt met nog veel langere berichten. Berichten mogen niet overflowen.", IDGenerator::generateID()),
             Message::jsonToMessage((new Message("Test", "Test2", "0"))->jsonSerialize())
 
-        ];
+        ];*/
+
+        $messages = $this->fileManager->getAllMessages();
 
         return $messages;
     }
     
     public function addMessage(Message $message){
-        array_push($this->messages, $message);
+        $this->fileManager->addMessage($message);
     }
 
     //"Override" for multiple messages - useful when adding messages from text file to the guestbook all at once. 
@@ -56,9 +60,9 @@ class Guestbook{
 
 class Message implements JsonSerializable{
 
-    protected string $name; //Protected for possible inheritance
-    protected string $text;
-    protected string $id;
+    private string $name; //Protected for possible inheritance
+    private string $text;
+    private string $id;
 
     function __construct(string $name, string $text, string $id){
 
@@ -84,12 +88,13 @@ class Message implements JsonSerializable{
         return $this->id;
     }
 
+    //Deze roep je aan als [variabele naam]->jsonSerialize()
     public function jsonSerialize(): string{
-    return json_encode(get_object_vars($this));
+        return json_encode(get_object_vars($this));
     }
-
+    //Deze roep je aan als Message::jsonToMessage()
     public static function jsonToMessage(string $json): Message{
-        $decodedjson = json_decode($json);
+        $decodedjson = json_decode($json); //This is it
         return (new Message($decodedjson->name, $decodedjson->text, $decodedjson->id));
     }
 

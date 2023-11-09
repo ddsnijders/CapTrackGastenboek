@@ -2,6 +2,7 @@
 declare(strict_types = 1);
 include_once("logic.php");
 include_once("classes.php");
+include_once("filemanager.php");
 ?>
 
 <link rel="stylesheet" href="style.css">
@@ -21,7 +22,7 @@ include_once("classes.php");
                 <input type="text" name="name" id="name-input">
                 <label for="text">Tekst</label>
                 <textarea name="text" id="text-input"></textarea>
-                <input type="submit" class="btn" name="submit">
+                <input type="submit" class="btn" name="submit" value="Plaats bericht">
             </div>
         </form> 
     </div>
@@ -29,10 +30,17 @@ include_once("classes.php");
     <div id="message-container">
         <?php
             $pagemanager = new PageManager();
-            $pagemanager->displayMessages();
+            
+            if (empty($_POST['submit'])){
+                $pagemanager->displayMessages();
+            }
+            //$pagemanager->displayMessages();
             if (!empty($_POST['submit'])){
                 $pagemanager->onSubmitPress();
+                $pagemanager->displayMessages();
+                header('Location: index.php'); //This is so posting doesn't reoccur every time
             }
+            unset($_POST['submit']);
         ?>
     </div>
 
