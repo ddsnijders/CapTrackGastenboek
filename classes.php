@@ -51,10 +51,8 @@ class Guestbook{
         }
     }
 
-    public function deleteMessage(int $messageID){
-        $deletedmessageindex = $this->findMessage($messageID);
-        unset($this->messages[$deletedmessageindex]);
-        //$upm->functionToDeleteMessage //Delete message from
+    public function deleteMessage(string $messageID){
+        $this->fileManager->deleteMessage($messageID);
     }
 }
 

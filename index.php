@@ -30,7 +30,16 @@ include_once("filemanager.php");
     <div id="message-container">
         <?php
             $pagemanager = new PageManager();
-            
+            $listofids = $pagemanager->getSubmitIDs();
+            if (!empty($_POST)){
+                foreach($_POST as $delete => $postvalue){
+                    if (strpos($delete, 'delete') === 0){
+                        $id = str_replace('delete', '', $delete);
+                        $pagemanager->deleteMessage($id);
+                    }
+                }
+                //header('Location: index.php');
+            }
             if (empty($_POST['submit'])){
                 $pagemanager->displayMessages();
             }
@@ -40,7 +49,7 @@ include_once("filemanager.php");
                 $pagemanager->displayMessages();
                 header('Location: index.php'); //This is so posting doesn't reoccur every time
             }
-            unset($_POST['submit']);
+            //unset($_POST['submit']);
         ?>
     </div>
 

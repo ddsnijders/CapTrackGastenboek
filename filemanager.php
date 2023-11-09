@@ -32,13 +32,14 @@ class FileManager{
     }
 
     public function deleteMessage(string $id){
-        $filecontentsarray = $this->getFileContentsJsonArray($this->filename);
+        $filecontentsarray = $this->getFileContentsMessageArray($this->filename);
         foreach($filecontentsarray as $key => &$message){
             if ($message->getID() == $id){
                 unset($filecontentsarray[$key]);
                 break;
             }
         }
+        file_put_contents($this->filename, json_encode($filecontentsarray));
     }
 
     private function getFileContentsJsonArray($filename): array{
