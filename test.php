@@ -14,19 +14,33 @@ if(!file_exists('files/users.json')) {
     // echo (new Post())->addPost();     
 }
 
-$objjson = [json_encode(new stdClass)];
+
 
 
 $file = file_get_contents(filename: 'files/users.json', use_include_path: true);
+   $jsonArray = json_decode($file,true);
+   $baseArray = array(array());
+   
+    // $objjson = [];
     $name = $_POST['name'];
     $message = $_POST['message'];
     $postArray = array('name'=>$name, 'message'=>$message);
-    array_push($objjson, $postArray);
-    echo print_r($objjson) . '<br>';
-    echo var_dump($objjson) . '<br>';
-    echo " check if  array" . is_array ($objjson);
+    foreach ($baseArray as $arrayValue){
+          array_push($baseArray, $postArray);
+    }
+
+    // for($i = 0; $i < count($baseArray); $i++){
+    //     array_push($baseArray, $arrayValue[i]);
+    // }
+    // echo array_push($jsonArray, $postArray);
+    echo print_r($jsonArray) . '<br>';
+    echo var_dump($jsonArray) . '<br>';
+    // echo " check if  array" . is_array ($objjson);
     echo "--------------------------------------" . '<br>';
-    file_put_contents('files/users.json', json_encode($objjson));
+    file_put_contents('files/users.json', json_encode($baseArray));
+
+    file_get_contents(filename: 'files/users.json', use_include_path: true);
+    
 }
 }
 
