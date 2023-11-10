@@ -19,9 +19,9 @@ include_once("filemanager.php");
             <h1>Laat een berichtje achter!</h1>
             <div class="flex-col">
                 <label for="name">Naam</label>
-                <input type="text" name="name" id="name-input">
+                <input type="text" name="name" required id="name-input">
                 <label for="text">Tekst</label>
-                <textarea name="text" id="text-input"></textarea>
+                <textarea name="text" id="text-input" required></textarea>
                 <input type="submit" class="btn" name="submit" value="Plaats bericht">
             </div>
         </form> 
