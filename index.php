@@ -10,7 +10,7 @@
 
     
     <main>
-        <form action="skeletonpractice.php" method="post" >
+        <form action="test.php" method="post" >
             <label for="name" >Tell us your name here &nbsp;&nbsp;&nbsp;&nbsp;</label> 
             <input name="name" placeholder="name" required value="{name}" type="text">
             <br>
