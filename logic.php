@@ -57,11 +57,6 @@ class PageManager{
         }
         return $postids;
     }
-
-
-
-    
-
 }
 
 ?>

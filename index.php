@@ -38,18 +38,15 @@ include_once("filemanager.php");
                         $pagemanager->deleteMessage($id);
                     }
                 }
-                //header('Location: index.php');
             }
             if (empty($_POST['submit'])){
                 $pagemanager->displayMessages();
             }
-            //$pagemanager->displayMessages();
             if (!empty($_POST['submit'])){
                 $pagemanager->onSubmitPress();
                 $pagemanager->displayMessages();
                 header('Location: index.php'); //This is so posting doesn't reoccur every time
             }
-            //unset($_POST['submit']);
         ?>
     </div>
 

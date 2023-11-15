@@ -10,45 +10,15 @@ class Guestbook{
     public function __construct(){
         $this->fileManager = new FileManager();
         $this->messages = $this->getMessages();
-
     }
 
     public function getMessages():array{
-        
-        /*$messages = [
-            new Message("Djowie", "Dit is een bericht om te kijken wat er gebeurt met langere berichten.", IDGenerator::generateID()),
-            new Message("Brian", "Dit is een testbericht om te kijken wat er gebeurt met nog veel langere berichten. Berichten mogen niet overflowen.", IDGenerator::generateID()),
-            Message::jsonToMessage((new Message("Test", "Test2", "0"))->jsonSerialize())
-
-        ];*/
-
         $messages = $this->fileManager->getAllMessages();
-
         return $messages;
     }
     
     public function addMessage(Message $message){
         $this->fileManager->addMessage($message);
-    }
-
-    //"Override" for multiple messages - useful when adding messages from text file to the guestbook all at once. 
-    // Can be removed in favour of addMessage in a loop instead.
-    public function addMessages(array $messages){
-
-        //$upm->functionToAddMessage() //Add message to file
-
-        //To do: interface with file manager
-        foreach($messages as $message){
-            array_push($this->messages, $message);
-        }
-    }
-
-    public function findMessage(int $messageID){
-        foreach($this->messages as $key=>$message){
-            if ($message->getID() === $messageID){
-                return $key;
-            }
-        }
     }
 
     public function deleteMessage(string $messageID){
@@ -58,7 +28,7 @@ class Guestbook{
 
 class Message implements JsonSerializable{
 
-    private string $name; //Protected for possible inheritance
+    private string $name;
     private string $text;
     private string $id;
 
@@ -86,18 +56,13 @@ class Message implements JsonSerializable{
         return $this->id;
     }
 
-    //Deze roep je aan als [variabele naam]->jsonSerialize()
     public function jsonSerialize(): string{
         return json_encode(get_object_vars($this));
     }
-    //Deze roep je aan als Message::jsonToMessage()
     public static function jsonToMessage(string $json): Message{
-        $decodedjson = json_decode($json); //This is it
+        $decodedjson = json_decode($json);
         return (new Message($decodedjson->name, $decodedjson->text, $decodedjson->id));
     }
-
-    //[0, 1, [0,1]];
-
 }
 
 class GuestbookDisplayer{
@@ -163,4 +128,3 @@ class IDGenerator{
         return uniqid("", true);
     }
 }
-//$currentMessage = (new UserPostMessage())->userMessageCheck();

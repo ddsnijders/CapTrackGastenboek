@@ -54,7 +54,6 @@ class FileManager{
 
     private function getFileContentsMessageArray($filename): array{
         $filecontentsarray = $this->getFileContentsJsonArray($filename);
-        //$filecontentsarray = [(new Message("Hallo", "Wereld!", "0"))->jsonSerialize()];
         $messages = array();
         foreach ($filecontentsarray as &$message){
             array_push($messages, Message::jsonToMessage($message));
